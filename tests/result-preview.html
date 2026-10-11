@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>数智底座 · 组件验证</title></head>
+<body><div id="app"></div><script type="module">
+import { createApp, h } from 'vue'
+import QueryResponse from '../src/components/QueryResponse.vue'
+import '../src/style.css'
+
+// Explicit test fixtures. This page is not included in the production build.
+const rows = Array.from({length:25}, (_, index) => ({地区:`测试地区 ${index + 1}`,销售额:String(index % 5 === 0 ? -(index + 1) * 120.25 : (index + 1) * 120.25),订单数量:index + 10}))
+const success = {id:'fixture-success', question:'固定测试数据：验证表格、排序、分页和可视化', status:'success', steps:[{text:'生成SQL',status:'success',duration:0.4},{text:'验证SQL',status:'success',duration:0.1},{text:'执行SQL',status:'success',duration:0.1}], rows, rowCount:25, hasResult:true, duration:0.6}
+const empty = {id:'fixture-empty',question:'固定测试数据：空结果',status:'success',steps:[],rows:[],rowCount:0,hasResult:true,duration:0.1}
+createApp({setup(){return () => h('main',{class:'secondary-container',style:{height:'100%',overflowY:'auto'}},[h('h1',{style:{marginBottom:'10px',fontSize:'22px'}},'组件验证页面'),h('p',{style:{marginBottom:'25px'}},'以下内容为固定测试数据，用于开发验证。'),h(QueryResponse,{turn:success}),h(QueryResponse,{turn:empty})])}}).mount('#app')
+</script></body>
+</html>
